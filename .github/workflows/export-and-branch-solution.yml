@@ -43,12 +43,15 @@ jobs:
     - name: Install Power Platform Tools
       uses: microsoft/powerplatform-actions/actions-install@v1
     - name: Debug secret presence
+      shell: pwsh
       run: |
-        if [ -z "${{ secrets.PowerPlatformSPN }}" ]; then
-        echo "Secret is EMPTY or not found"
-        else
-        echo "Secret is PRESENT"
-        fi
+        if ([string]::IsNullOrEmpty("${{ secrets.PowerPlatformSPN }}")) {
+        Write-Host "Secret is EMPTY or not found"
+        }
+        else {
+          Write-Host "Secret is PRESENT"
+        }
+
 
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@v1
